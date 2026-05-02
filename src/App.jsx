@@ -117,7 +117,7 @@ function Hero() {
         <h1 className={styles.heroH1}>
           software engineer
           <br />
-          <em className={styles.heroAccent}>&amp; infrastructure nerd</em>
+          <em className={styles.heroAccent}>&amp; infrastructure enthusiast</em>
         </h1>
 
         <p className={styles.heroRole}>CS @ Brock University · IBM co-op</p>
