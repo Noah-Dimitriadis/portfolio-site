@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import styles from './App.module.css'
 
 // ── Data — fill these in ──────────────────────────────────────────────────────
