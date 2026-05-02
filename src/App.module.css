@@ -59,7 +59,9 @@
   border-radius: 4px;
   color: var(--fg);
   background: transparent;
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .navCta:hover {
@@ -87,8 +89,12 @@
   margin-bottom: 14px;
 }
 
-.ps1User { color: var(--purple); }
-.ps1Path { color: var(--cyan); }
+.ps1User {
+  color: var(--purple);
+}
+.ps1Path {
+  color: var(--cyan);
+}
 
 .heroH1 {
   font-size: 30px;
@@ -137,7 +143,9 @@
   transition: opacity 0.15s;
 }
 
-.btnPrimary:hover { opacity: 0.85; }
+.btnPrimary:hover {
+  opacity: 0.85;
+}
 
 .btnGhost {
   padding: 9px 20px;
@@ -147,7 +155,9 @@
   border-radius: 4px;
   font-size: 13px;
   font-family: var(--font-mono);
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .btnGhost:hover {
@@ -177,8 +187,12 @@
   flex-shrink: 0;
 }
 
-.dotGreen  { background: var(--green); }
-.dotPurple { background: var(--purple); }
+.dotGreen {
+  background: var(--green);
+}
+.dotPurple {
+  background: var(--purple);
+}
 
 /* ── Avatar ──────────────────────────────────────────────────────────────── */
 
@@ -263,7 +277,7 @@
 }
 
 .sectionLabel::before {
-  content: '# ';
+  content: "# ";
   color: var(--comment);
 }
 
@@ -281,7 +295,9 @@
   border: 1px solid var(--bg-line);
   border-radius: 4px;
   color: var(--comment);
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .skillPill:hover {
@@ -441,7 +457,7 @@
 }
 
 .expBullets li::before {
-  content: '—';
+  content: "—";
   position: absolute;
   left: 0;
   color: var(--comment);
@@ -463,7 +479,9 @@
   color: var(--comment);
   background: transparent;
   font-family: var(--font-mono);
-  transition: border-color 0.15s, color 0.15s;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
 }
 
 .contactLink:hover {
@@ -508,7 +526,9 @@
     height: 72px;
   }
 
-  .heroH1 { font-size: 22px; }
+  .heroH1 {
+    font-size: 22px;
+  }
 
   .projGrid {
     grid-template-columns: 1fr;
@@ -518,7 +538,13 @@
     grid-column: 1;
   }
 
-  .section { padding: 24px 18px; }
-  .nav     { padding: 12px 18px; }
-  .navLinks { display: none; }
+  .section {
+    padding: 24px 18px;
+  }
+  .nav {
+    padding: 12px 18px;
+  }
+  .navLinks {
+    display: none;
+  }
 }
