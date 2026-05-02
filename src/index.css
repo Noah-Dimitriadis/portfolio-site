@@ -1,18 +1,20 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 :root {
-  --bg:        #282a36;
-  --bg-line:   #44475a;
-  --comment:   #6272a4;
-  --purple:    #bd93f9;
-  --cyan:      #8be9fd;
-  --green:     #50fa7b;
-  --fg:        #f8f8f2;
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  --bg: #282a36;
+  --bg-line: #44475a;
+  --comment: #6272a4;
+  --purple: #bd93f9;
+  --cyan: #8be9fd;
+  --green: #50fa7b;
+  --fg: #f8f8f2;
+  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 }
 
 html {
@@ -45,15 +47,29 @@ img {
 }
 
 /* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--bg-line); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--comment); }
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--bg-line);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--comment);
+}
 
 /* Blinking cursor utility */
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .cursor {
@@ -68,8 +84,14 @@ img {
 
 /* Fade-in on load */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .fade-up {
