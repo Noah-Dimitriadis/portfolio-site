@@ -140,10 +140,6 @@ function Hero() {
 
         <div className={styles.statusRow}>
           <span className={styles.statusItem}>
-            <span className={`${styles.dot} ${styles.dotGreen}`} />
-            open to internships
-          </span>
-          <span className={styles.statusItem}>
             <span className={`${styles.dot} ${styles.dotPurple}`} />
             Sharon, ON
           </span>
