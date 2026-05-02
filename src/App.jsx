@@ -14,7 +14,7 @@ const SKILLS = [
   { label: 'Python',                 highlight: true },
   { label: 'Docker',                 highlight: true },
   { label: 'FastAPI',                highlight: true },
-  { label: 'FastMCP',                  highlight: false },
+  { label: 'FastMCP',                highlight: true },
   { label: 'CI/CD',                  highlight: true },
   { label: 'PostgreSQL',             highlight: false },
   { label: 'Helmfile',               highlight: false },
@@ -230,7 +230,7 @@ function Contact() {
     <section className={styles.section} id="contact">
       <p className={styles.sectionLabel}>contact</p>
       <div className={styles.contactRow}>
-        <a href="mailto:you@email.com"                     className={styles.contactLink}>email ↗</a>
+        <a href="mailto:noahdimitriadis2004@gmail.com"                     className={styles.contactLink}>email ↗</a>
         <a href="https://github.com/Noah-Dimitriadis"          className={styles.contactLink} target="_blank" rel="noreferrer">GitHub ↗</a>
         <a href="https://www.linkedin.com/in/noah-dimitriadis-a953a526b/"     className={styles.contactLink} target="_blank" rel="noreferrer">LinkedIn ↗</a>
         <a href="/resume.pdf" download                     className={styles.contactLink}>resume (pdf) ↓</a>
