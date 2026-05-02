@@ -12,15 +12,14 @@ const SKILLS = [
   { label: 'Kubernetes / OpenShift', highlight: true },
   { label: 'Python',                 highlight: true },
   { label: 'Docker',                 highlight: true },
-  { label: 'FastAPI',                highlight: true },
-  { label: 'FastMCP',                highlight: true },
   { label: 'CI/CD',                  highlight: true },
-  { label: 'PostgreSQL',             highlight: false },
-  { label: 'Helmfile',               highlight: false },
+  { label: 'Helmfile',               highlight: true },
+  { label: 'FastAPI',                highlight: false },
+  { label: 'FastMCP',                highlight: false },
   { label: 'IBM Cloud / ROKS',       highlight: false },
+  { label: 'Redis',                  highlight: false },
+  { label: 'PostgreSQL',             highlight: false },
   { label: 'Linux',                  highlight: false },
-  { label: 'Redis',                  highlight: false },
-  { label: 'Redis',                  highlight: false },
 ]
 
 const PROJECTS = [
@@ -241,7 +240,7 @@ function Contact() {
 function Footer() {
   return (
     <footer className={styles.footer}>
-      <span className={styles.footerText}>noahxlastname.dev</span>
+      <span className={styles.footerText}>portfolio.noahdimitriadis.com</span>
       <span className={styles.footerText}>
         built with ♥ <span className="cursor" />
       </span>
