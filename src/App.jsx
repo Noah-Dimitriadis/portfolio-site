@@ -9,18 +9,18 @@ const NAV_LINKS = [
 ];
 
 const SKILLS = [
-  { label: 'Kubernetes / OpenShift', highlight: true },
-  { label: 'Python',                 highlight: true },
-  { label: 'Docker',                 highlight: true },
-  { label: 'CI/CD',                  highlight: true },
-  { label: 'Helmfile',               highlight: true },
-  { label: 'FastAPI',                highlight: false },
-  { label: 'FastMCP',                highlight: false },
-  { label: 'IBM Cloud / ROKS',       highlight: false },
-  { label: 'Redis',                  highlight: false },
-  { label: 'PostgreSQL',             highlight: false },
-  { label: 'Linux',                  highlight: false },
-]
+  { label: "Kubernetes / OpenShift", highlight: true },
+  { label: "Python", highlight: true },
+  { label: "Docker", highlight: true },
+  { label: "CI/CD", highlight: true },
+  { label: "Helmfile", highlight: true },
+  { label: "FastAPI", highlight: false },
+  { label: "FastMCP", highlight: false },
+  { label: "IBM Cloud / ROKS", highlight: false },
+  { label: "Redis", highlight: false },
+  { label: "PostgreSQL", highlight: false },
+  { label: "Linux", highlight: false },
+];
 
 const PROJECTS = [
   {
