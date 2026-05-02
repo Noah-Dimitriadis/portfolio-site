@@ -14,42 +14,42 @@ const SKILLS = [
   { label: 'Python',                 highlight: true },
   { label: 'Docker',                 highlight: true },
   { label: 'FastAPI',                highlight: true },
+  { label: 'FastMCP',                  highlight: false },
+  { label: 'CI/CD',                  highlight: true },
   { label: 'PostgreSQL',             highlight: false },
   { label: 'Helmfile',               highlight: false },
-  { label: 'CI/CD',                  highlight: false },
-  { label: 'React',                  highlight: false },
   { label: 'IBM Cloud / ROKS',       highlight: false },
-  { label: 'Go',                     highlight: false },
   { label: 'Linux',                  highlight: false },
+  { label: 'Redis',                  highlight: false },
   { label: 'Redis',                  highlight: false },
 ]
 
 const PROJECTS = [
   {
-    id: 'pucklab',
-    title: 'PuckLab',
-    desc: 'NHL analytics platform with a FastAPI backend, PostgreSQL data store, and custom stat models. Advanced possession metrics, shot quality analysis, and fantasy lineup automation.',
-    tags: ['FastAPI', 'PostgreSQL', 'Python', 'Docker'],
-    live: true,
+    id: 'roks-infra',
+    title: 'OpenShift GitOps Platform',
+    desc: 'Zero-downtime IKS → ROKS migration with DNS failover. Helmfile monorepo managing dev/staging/prod clusters: cert-manager, ExternalDNS, IBM CIS, custom SCCs, and a GitHub Actions pipeline with automated Helm rollback on failure.',
+    tags: ['OpenShift', 'Helmfile', 'GitOps', 'IBM Cloud', 'Kubernetes'],
+    live: false,
     featured: true,
-    url: '#', // TODO: add live URL
-    github: '#', // TODO: add GitHub URL
+    url: null,
+    github: null,
+  },
+  {
+    id: 'obsidian-mcp',
+    title: 'obsidian-notes MCP',
+    desc: 'HTTP MCP server that semantically searches a local Obsidian vault. Two-stage retrieval: bi-encoder ANN (bge-large-en-v1.5) over the full vault → cross-encoder reranker (MiniLM) for top-5 results. Live sync via watchdog — note edits are re-embedded automatically.',
+    tags: ['FastMCP', 'ChromaDB', 'Python', 'Docker', 'RAG'],
+    live: true,
+    featured: false,
+    url: null,
+    github: 'https://github.com/Noah-Dimitriadis/SAM/tree/main/projects/sam-assistant-server',
   },
   {
     id: 'prompt-injection-lab',
     title: 'prompt injection lab',
     desc: 'Isolated research environment for testing prompt injection attack/defense patterns. Containerized eval harness with structured attack taxonomy.',
     tags: ['Docker', 'Python', 'LLM security'],
-    live: false,
-    featured: false,
-    url: null,
-    github: '#',
-  },
-  {
-    id: 'samv3',
-    title: 'SAMv3',
-    desc: 'Multi-agent AI assistant with local LLM orchestration, memory retrieval via Obsidian, and a Redis/Postgres message bus connecting agents.',
-    tags: ['MCP', 'Redis', 'Ollama', 'Python'],
     live: false,
     featured: false,
     url: null,
@@ -67,7 +67,7 @@ const EXPERIENCE = [
     bullets: [
       'Kubernetes/OpenShift infrastructure on ROKS — Helmfile-based GitOps deployments, IAM/RBAC, cluster provisioning.',
       'Implemented OS-native image signature verification under a deadline (Portieris on ROKS, cosign, ICR).',
-      'Contributing to an internal AI-powered content platform for IBM sellers and content creators.',
+      'Contributing to an internal AI-powered content platform (IBM watsonx Workshop, Context Manager) for IBM sellers and content creators.',
       // TODO: add more IBM bullets
     ],
   },
@@ -135,7 +135,7 @@ function Hero() {
           </span>
           <span className={styles.statusItem}>
             <span className={`${styles.dot} ${styles.dotPurple}`} />
-            Oshawa, ON
+            Sharon, ON
           </span>
         </div>
       </div>
@@ -149,7 +149,7 @@ function Hero() {
           </div>
           <span className={styles.avatarCorner} />
         </div>
-        <p className={styles.avatarName}>noah [lastname]</p>
+        <p className={styles.avatarName}>noah dimitriadis</p>
       </div>
     </section>
   )
@@ -231,8 +231,8 @@ function Contact() {
       <p className={styles.sectionLabel}>contact</p>
       <div className={styles.contactRow}>
         <a href="mailto:you@email.com"                     className={styles.contactLink}>email ↗</a>
-        <a href="https://github.com/yourusername"          className={styles.contactLink} target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a href="https://linkedin.com/in/yourusername"     className={styles.contactLink} target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/Noah-Dimitriadis"          className={styles.contactLink} target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="https://www.linkedin.com/in/noah-dimitriadis-a953a526b/"     className={styles.contactLink} target="_blank" rel="noreferrer">LinkedIn ↗</a>
         <a href="/resume.pdf" download                     className={styles.contactLink}>resume (pdf) ↓</a>
       </div>
     </section>
@@ -244,7 +244,7 @@ function Footer() {
     <footer className={styles.footer}>
       <span className={styles.footerText}>noahxlastname.dev</span>
       <span className={styles.footerText}>
-        built with ♥ and too much coffee<span className="cursor" />
+        built with ♥ <span className="cursor" />
       </span>
     </footer>
   )
