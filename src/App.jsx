@@ -148,15 +148,7 @@ function Hero() {
 
       <div className={styles.avatarWrap}>
         <div className={styles.avatarFrame}>
-          {/* TODO: replace with <img src="/photo.jpg" alt="Noah" /> */}
-          <div className={styles.avatarPlaceholder}>
-            <div className={styles.avatarIcon} />
-            <span className={styles.avatarLabel}>
-              your photo
-              <br />
-              here
-            </span>
-          </div>
+          <img src="/headshot.jpeg" alt="Noah" />
           <span className={styles.avatarCorner} />
         </div>
         <p className={styles.avatarName}>noah dimitriadis</p>
