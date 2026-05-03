@@ -151,7 +151,6 @@ function Hero() {
           <img src="/headshot.jpeg" alt="Noah" />
           <span className={styles.avatarCorner} />
         </div>
-        <p className={styles.avatarName}>noah dimitriadis</p>
       </div>
     </section>
   );
