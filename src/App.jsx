@@ -89,7 +89,7 @@ const HERO_LINES = [
   { text: "CS @ Brock University · IBM co-op", pauseAfter: 200 },
   {
     text: "I build things that run in production. Currently working on Kubernetes/OpenShift infra and internal AI tooling at IBM. Outside of work I run home servers, build analytics platforms, and poke at LLM security.",
-    rate: 13,
+    rate: 12,
     pauseAfter: 300,
   },
   { text: "", pauseAfter: 0 },
@@ -147,11 +147,16 @@ function useTerminalTyper(lines, baseRate = 28) {
       if (idx === lineIdx) return (lines[idx]?.text ?? "").slice(0, chars);
       return "";
     },
-    isTyping: (idx) =>
-      idx === lineIdx &&
-      (started ? chars < (lines[idx]?.text.length ?? 0) : true),
+    isTyping: (idx) => lineIdx < lines.length && idx === lineIdx,
     isVisible: (idx) => idx <= lineIdx,
   };
+}
+
+const BLINK_MS = 1100;
+
+function Cursor() {
+  const delay = -(Date.now() % BLINK_MS);
+  return <span className="cursor" style={{ animationDelay: `${delay}ms` }} />;
 }
 
 function TypedPrompt({ charsVisible, showCursor }) {
@@ -168,7 +173,7 @@ function TypedPrompt({ charsVisible, showCursor }) {
           </span>
         );
       })}
-      {showCursor && <span className="cursor" />}
+      {showCursor && <Cursor />}
     </div>
   );
 }
@@ -210,12 +215,12 @@ function Hero() {
         {typer.isVisible(1) && (
           <h1 className={styles.heroH1}>
             {typer.visibleFor(1)}
-            {typer.isTyping(1) && <span className="cursor" />}
+            {typer.isTyping(1) && <Cursor />}
             {typer.isVisible(2) && (
               <>
                 <br />
                 <em className={styles.heroAccent}>{typer.visibleFor(2)}</em>
-                {typer.isTyping(2) && <span className="cursor" />}
+                {typer.isTyping(2) && <Cursor />}
               </>
             )}
           </h1>
@@ -224,14 +229,14 @@ function Hero() {
         {typer.isVisible(3) && (
           <p className={styles.heroRole}>
             {typer.visibleFor(3)}
-            {typer.isTyping(3) && <span className="cursor" />}
+            {typer.isTyping(3) && <Cursor />}
           </p>
         )}
 
         {typer.isVisible(4) && (
           <p className={styles.heroSub}>
             {typer.visibleFor(4)}
-            {typer.isTyping(4) && <span className="cursor" />}
+            {typer.isTyping(4) && <Cursor />}
           </p>
         )}
 
