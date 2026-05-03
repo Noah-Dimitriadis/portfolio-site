@@ -74,7 +74,7 @@ const EXPERIENCE = [
     id: "brock",
     title: "bsc computer science",
     org: "Brock University · St. Catharines, ON",
-    date: "2022 – 2026",
+    date: "2022 – 2027",
     bullets: [],
   },
 ];
