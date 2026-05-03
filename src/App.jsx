@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import styles from "./App.module.css";
 
 // ── Data — fill these in ──────────────────────────────────────────────────────
@@ -79,6 +80,99 @@ const EXPERIENCE = [
   },
 ];
 
+// ── Terminal typer ────────────────────────────────────────────────────────────
+
+const HERO_LINES = [
+  { text: "noah@portfolio:~/about $ whoami", pauseAfter: 400 },
+  { text: "software engineer", pauseAfter: 120 },
+  { text: "& infrastructure enthusiast", pauseAfter: 350 },
+  { text: "CS @ Brock University · IBM co-op", pauseAfter: 200 },
+  {
+    text: "I build things that run in production. Currently working on Kubernetes/OpenShift infra and internal AI tooling at IBM. Outside of work I run home servers, build analytics platforms, and poke at LLM security.",
+    rate: 13,
+    pauseAfter: 300,
+  },
+  { text: "", pauseAfter: 0 },
+];
+
+const PROMPT_PARTS = [
+  { text: "noah@portfolio", cls: "ps1User" },
+  { text: ":", cls: "dim" },
+  { text: "~/about", cls: "ps1Path" },
+  { text: " $ ", cls: "dim" },
+  { text: "whoami", cls: null },
+];
+
+function useTerminalTyper(lines, baseRate = 28) {
+  const prefersReduced =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const [started, setStarted] = useState(false);
+  const [lineIdx, setLineIdx] = useState(0);
+  const [chars, setChars] = useState(0);
+
+  useEffect(() => {
+    if (prefersReduced) return;
+    const t = setTimeout(() => setStarted(true), 200);
+    return () => clearTimeout(t);
+  }, [prefersReduced]);
+
+  useEffect(() => {
+    if (!started || prefersReduced || lineIdx >= lines.length) return;
+    const line = lines[lineIdx];
+    const rate = line.rate ?? baseRate;
+    if (chars < line.text.length) {
+      const t = setTimeout(() => setChars((c) => c + 1), rate);
+      return () => clearTimeout(t);
+    }
+    const t = setTimeout(() => {
+      setLineIdx((i) => i + 1);
+      setChars(0);
+    }, line.pauseAfter ?? 250);
+    return () => clearTimeout(t);
+  }, [started, lineIdx, chars, prefersReduced, lines, baseRate]);
+
+  if (prefersReduced) {
+    return {
+      visibleFor: (idx) => lines[idx]?.text ?? "",
+      isTyping: () => false,
+      isVisible: () => true,
+    };
+  }
+
+  return {
+    visibleFor: (idx) => {
+      if (idx < lineIdx) return lines[idx]?.text ?? "";
+      if (idx === lineIdx) return (lines[idx]?.text ?? "").slice(0, chars);
+      return "";
+    },
+    isTyping: (idx) =>
+      idx === lineIdx &&
+      (started ? chars < (lines[idx]?.text.length ?? 0) : true),
+    isVisible: (idx) => idx <= lineIdx,
+  };
+}
+
+function TypedPrompt({ charsVisible, showCursor }) {
+  let rem = charsVisible;
+  return (
+    <div className={styles.heroPrompt}>
+      {PROMPT_PARTS.map((part, i) => {
+        if (rem <= 0) return null;
+        const slice = part.text.slice(0, Math.min(rem, part.text.length));
+        rem -= part.text.length;
+        return (
+          <span key={i} className={part.cls ? styles[part.cls] : undefined}>
+            {slice}
+          </span>
+        );
+      })}
+      {showCursor && <span className="cursor" />}
+    </div>
+  );
+}
+
 // ── Sub-components ────────────────────────────────────────────────────────────
 
 function Nav() {
@@ -103,47 +197,62 @@ function Nav() {
 }
 
 function Hero() {
+  const typer = useTerminalTyper(HERO_LINES);
+
   return (
-    <section className={`${styles.hero} fade-up`}>
+    <section className={styles.hero}>
       <div className={styles.heroText}>
-        <div className={styles.heroPrompt}>
-          <span className={styles.ps1User}>noah@portfolio</span>
-          <span className={styles.dim}>:</span>
-          <span className={styles.ps1Path}>~/about</span>
-          <span className={styles.dim}> $ </span>
-          <span>whoami</span>
-        </div>
+        <TypedPrompt
+          charsVisible={typer.visibleFor(0).length}
+          showCursor={typer.isTyping(0)}
+        />
 
-        <h1 className={styles.heroH1}>
-          software engineer
-          <br />
-          <em className={styles.heroAccent}>&amp; infrastructure enthusiast</em>
-        </h1>
+        {typer.isVisible(1) && (
+          <h1 className={styles.heroH1}>
+            {typer.visibleFor(1)}
+            {typer.isTyping(1) && <span className="cursor" />}
+            {typer.isVisible(2) && (
+              <>
+                <br />
+                <em className={styles.heroAccent}>{typer.visibleFor(2)}</em>
+                {typer.isTyping(2) && <span className="cursor" />}
+              </>
+            )}
+          </h1>
+        )}
 
-        <p className={styles.heroRole}>CS @ Brock University · IBM co-op</p>
+        {typer.isVisible(3) && (
+          <p className={styles.heroRole}>
+            {typer.visibleFor(3)}
+            {typer.isTyping(3) && <span className="cursor" />}
+          </p>
+        )}
 
-        <p className={styles.heroSub}>
-          I build things that run in production. Currently working on
-          Kubernetes/OpenShift infra and internal AI tooling at IBM. Outside of
-          work I run home servers, build analytics platforms, and poke at LLM
-          security.
-        </p>
+        {typer.isVisible(4) && (
+          <p className={styles.heroSub}>
+            {typer.visibleFor(4)}
+            {typer.isTyping(4) && <span className="cursor" />}
+          </p>
+        )}
 
-        <div className={styles.heroActions}>
-          <a href="#projects" className={styles.btnPrimary}>
-            view projects
-          </a>
-          <a href="#contact" className={styles.btnGhost}>
-            get in touch
-          </a>
-        </div>
-
-        <div className={styles.statusRow}>
-          <span className={styles.statusItem}>
-            <span className={`${styles.dot} ${styles.dotPurple}`} />
-            Sharon, ON
-          </span>
-        </div>
+        {typer.isVisible(5) && (
+          <>
+            <div className={`${styles.heroActions} fade-up`}>
+              <a href="#projects" className={styles.btnPrimary}>
+                view projects
+              </a>
+              <a href="#contact" className={styles.btnGhost}>
+                get in touch
+              </a>
+            </div>
+            <div className={`${styles.statusRow} fade-up`}>
+              <span className={styles.statusItem}>
+                <span className={`${styles.dot} ${styles.dotPurple}`} />
+                Sharon, ON
+              </span>
+            </div>
+          </>
+        )}
       </div>
 
       <div className={styles.avatarWrap}>
