@@ -62,7 +62,7 @@ const EXPERIENCE = [
     id: "ibm",
     title: "software developer co-op",
     org: "IBM · Markham, ON",
-    date: "2024 – present",
+    date: "2025 – present",
     bullets: [
       "Kubernetes/OpenShift infrastructure on ROKS — Helmfile-based GitOps deployments, IAM/RBAC, cluster provisioning.",
       "Implemented OS-native image signature verification under a deadline (Portieris on ROKS, cosign, ICR).",
