@@ -355,15 +355,6 @@
   align-items: center;
 }
 
-.projBadge {
-  font-size: 10px;
-  padding: 2px 8px;
-  background: rgba(80, 250, 123, 0.1);
-  color: var(--green);
-  border-radius: 3px;
-  border: 0.5px solid var(--green);
-}
-
 .projArrow {
   font-size: 12px;
   color: var(--comment);

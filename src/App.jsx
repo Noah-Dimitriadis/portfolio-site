@@ -21,15 +21,19 @@ const SKILLS = [
   { label: "Redis", highlight: false },
   { label: "PostgreSQL", highlight: false },
   { label: "Linux", highlight: false },
+  { label: "Polars", highlight: false },
+  { label: "Alembic", highlight: false },
+  { label: "Typer", highlight: false },
+  { label: "Claude API", highlight: false },
+  { label: "whisper.cpp", highlight: false },
 ];
 
 const PROJECTS = [
   {
-    id: "roks-infra",
+    id: "gitops-platform",
     title: "OpenShift GitOps Platform",
-    desc: "Zero-downtime IKS → ROKS migration with DNS failover. Helmfile monorepo managing dev/staging/prod clusters: cert-manager, ExternalDNS, IBM CIS, custom SCCs, and a GitHub Actions pipeline with automated Helm rollback on failure.",
-    tags: ["OpenShift", "Helmfile", "GitOps", "IBM Cloud", "Kubernetes"],
-    live: false,
+    desc: "GitOps deployment platform for IBM's internal AI sales-enablement tool — a NotebookLM-style assistant grounded in internal product context, built to help sellers sell smarter. 8 Helm charts and ~1,500 lines of CI/CD across three OpenShift clusters, running change detection, Terraform plan/apply, per-environment diffs, and approval-gated production deploys. 58% of commits to the deployment/infra repo, 93 PRs, ~27K lines.",
+    tags: ["OpenShift", "Helm", "Terraform", "GitOps", "CI/CD"],
     featured: true,
     url: null,
     github: null,
@@ -39,21 +43,28 @@ const PROJECTS = [
     title: "obsidian-notes MCP",
     desc: "HTTP MCP server that semantically searches a local Obsidian vault. Two-stage retrieval: bi-encoder ANN (bge-large-en-v1.5) over the full vault → cross-encoder reranker (MiniLM) for top-5 results. Live sync via watchdog — note edits are re-embedded automatically.",
     tags: ["FastMCP", "ChromaDB", "Python", "Docker", "RAG"],
-    live: true,
     featured: false,
     url: null,
     github:
       "https://github.com/Noah-Dimitriadis/SAM/tree/main/projects/sam-assistant-server",
   },
   {
-    id: "prompt-injection-lab",
-    title: "prompt injection lab",
-    desc: "Isolated research environment for testing prompt injection attack/defense patterns. Containerized eval harness with structured attack taxonomy.",
-    tags: ["Docker", "Python", "LLM security"],
-    live: false,
+    id: "workshopffl",
+    title: "Fantasy Football Draft & Season Assistant",
+    desc: "Fantasy football data platform for a 12-team Sleeper league: ingests ten seasons of nflverse data plus live league state into Postgres, and computes VORP/VONA player valuations for two-FLEX and superflex PPR formats. Typer CLI with a live draft assistant polling every 2-3s on the clock; APScheduler runs nightly, idempotent ingest merges. ~13K lines, 280+ tests.",
+    tags: ["FastAPI", "PostgreSQL", "Polars", "Alembic", "APScheduler"],
     featured: false,
     url: null,
-    github: "#",
+    github: "https://github.com/Noah-Dimitriadis/fantasy-football",
+  },
+  {
+    id: "notes-pipeline",
+    title: "Lecture Notes Pipeline",
+    desc: "Content-hash-cached pipeline that turns a lecture recording, slide deck, and personal notes into one synthesized markdown file. whisper.cpp (large-v3-turbo) transcription benchmarked against real lecture audio, Claude Opus synthesis grounded in the deck skeleton, Typer CLI. A FastMCP server is next, so Claude Code can trigger and poll builds directly.",
+    tags: ["Python", "Claude API", "whisper.cpp", "SQLite", "Typer"],
+    featured: false,
+    url: null,
+    github: "https://github.com/Noah-Dimitriadis/notes-pipeline",
   },
   // TODO: add more projects
 ];
@@ -63,12 +74,14 @@ const EXPERIENCE = [
     id: "ibm",
     title: "software developer co-op",
     org: "IBM · Markham, ON",
-    date: "2025 – present",
+    date: "Feb 2026 – present",
     bullets: [
-      "Kubernetes/OpenShift infrastructure on ROKS — Helmfile-based GitOps deployments, IAM/RBAC, cluster provisioning.",
-      "Implemented OS-native image signature verification under a deadline (Portieris on ROKS, cosign, ICR).",
-      "Contributing to an internal AI-powered content platform (IBM watsonx Workshop, Context Manager) for IBM sellers and content creators.",
-      // TODO: add more IBM bullets
+      "Created and maintain the GitOps deployment platform for IBM's internal AI sales-enablement tool (58% of commits to the deployment/infra repo, 93 PRs, ~27K lines): 8 Helm charts and ~1,500 lines of CI/CD across three OpenShift clusters, running change detection, Terraform plan/apply, per-environment diffs, and approval-gated production deploys.",
+      "Designed and built PR preview environments — each pull request provisions an isolated namespace, three seeded Postgres databases, scoped Elasticsearch indices, and a TLS-terminated URL, with automated teardown on close; engineered the cross-instance dispatch (GitHub.com → GitHub Enterprise) so external CI failures surface on the originating PR.",
+      "Executed a live production MongoDB migration under active traffic via Terraform and the IBM Cloud CLI, coordinating credential regeneration and staging the cutover through lower environments first, with zero data loss.",
+      "Led the Kubernetes-to-OpenShift migration for the Context Manager and Core Services applications — routes replacing ingress, SecurityContextConstraints, non-root containers, scoped service accounts, and pgbouncer connection pooling in front of managed Postgres.",
+      "Built the LLM observability and evaluation platform: authored MLflow and OpenTelemetry Collector Helm charts with SSO sidecars and API-key gating, instrumented GenAI spans in the Rails application, and shipped a weekly automated eval pipeline publishing results to MLflow.",
+      "Own database provisioning and network exposure across a Terraform/Terragrunt estate spanning three environments; hardened clusters with default-deny network policies, private-only endpoints behind VPN, and SOPS-encrypted secrets, and patched a SQL injection vulnerability in a production API endpoint.",
     ],
   },
   {
@@ -88,7 +101,7 @@ const HERO_LINES = [
   { text: "& infrastructure enthusiast", pauseAfter: 350 },
   { text: "CS @ Brock University · IBM co-op", pauseAfter: 200 },
   {
-    text: "I build things that run in production. Currently working on Kubernetes/OpenShift infra and internal AI tooling at IBM. Outside of work I run home servers, build analytics platforms, and poke at LLM security.",
+    text: "I build things that run in production. Currently working on Kubernetes/OpenShift infra and internal AI tooling at IBM. Outside of work I run a home server, build a fantasy-football analytics platform, and I'm building a Claude-powered pipeline that turns lecture recordings into study notes.",
     rate: 12,
     pauseAfter: 300,
   },
@@ -296,7 +309,6 @@ function ProjectCard({ project }) {
       <div className={styles.projTop}>
         <span className={styles.projTitle}>{project.title}</span>
         <div className={styles.projTopRight}>
-          {project.live && <span className={styles.projBadge}>live</span>}
           {project.github && (
             <a
               href={project.github}
