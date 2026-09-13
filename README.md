@@ -5,7 +5,7 @@ Personal portfolio site — Dracula-themed, React + Vite, served via nginx in Do
 ## Prerequisites
 
 - Node 20+ (for local dev)
-- Docker (for deployment)
+- Docker (optional, for local image testing)
 
 ## Local dev
 
@@ -37,39 +37,47 @@ npm run dev
 
 6. **Domain** — update footer text and `index.html` meta
 
-## Build & run with Docker
+## Deployment
+
+Deploys are automated via GitHub Actions (`.github/workflows/release.yml`). Every push
+(or merged PR) to `main` triggers a release:
+
+1. The next patch version is computed from existing git tags
+   (`vX.Y.Z` → `vX.Y.(Z+1)`, starting at `v0.0.1`) and pushed as a new tag.
+2. The Docker image is built and pushed to GHCR as both:
+   - `ghcr.io/noah-dimitriadis/portfolio-site:vX.Y.Z`
+   - `ghcr.io/noah-dimitriadis/portfolio-site:latest`
+
+The site runs on a k3s cluster that pulls from GHCR via an existing `imagePullSecret`.
+Kubernetes doesn't auto-redeploy on a new `:latest` push, so after the workflow finishes
+roll out the new image manually:
 
 ```bash
-# Build the image
+kubectl rollout restart deployment/<deployment-name>
+```
+
+Bumping minor/major versions (instead of the automatic patch bump) is done by pushing a
+tag yourself before merging, e.g. `git tag v1.3.0 && git push origin v1.3.0` — the next
+automatic release will then bump patch from that tag.
+
+## Local image build (optional)
+
+To build and run the image locally without going through CI:
+
+```bash
 docker build -t portfolio .
-
-# Run it
-docker run -d \
-  --name portfolio \
-  --restart unless-stopped \
-  -p 3010:80 \
-  portfolio
-
+docker run -d --name portfolio --restart unless-stopped -p 3010:80 portfolio
 # → http://localhost:3010
 ```
-
-Point your reverse proxy (Caddy/nginx/Cloudflare Tunnel) at port 3010.
-
-## Rebuild after changes
-
-```bash
-docker build -t portfolio . && \
-docker stop portfolio && \
-docker rm portfolio && \
-docker run -d --name portfolio --restart unless-stopped -p 3010:80 portfolio
-```
-
-Or wrap in a `deploy.sh` script to do it in one command.
 
 ## File structure
 
 ```
 portfolio/
+├── .github/
+│   └── workflows/
+│       ├── lint.yml     ← lints/formats PRs into main
+│       └── release.yml  ← auto-tags + builds/pushes image on push to main
 ├── public/
 │   ├── photo.jpg       ← your photo (add this)
 │   └── resume.pdf      ← your resume (add this)
